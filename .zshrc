@@ -1,24 +1,21 @@
-eval "$(rbenv init -)"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 PROMPT='%c %# '
 autoload -U compinit
-compinit -u 
+compinit -u
 alias cdt='cd test3/test/'
 alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'"
 
 # Docker
 alias d='docker'
-alias dc='docker-compose'
-alias dcw='docker-compose exec web'
-alias dca='docker-compose exec app'
-alias dcwb='docker-compose exec app bundle exec'
-alias dcab='docker-compose exec app bundle exec'
-
+alias dc='docker compose'
+alias dcw='docker compose exec web'
+alias dca='docker compose exec app'
+alias dcwb='docker compose exec app bundle exec'
+alias dcab='docker compose exec app bundle exec'
 
 # git ブランチ名を色付きで表示させるメソッド
 function rprompt-git-current-branch {
   local branch_name st branch_status
- 
+
   if [ ! -e  ".git" ]; then
     # git 管理されていないディレクトリは何も返さない
     return
@@ -48,10 +45,10 @@ function rprompt-git-current-branch {
   # ブランチ名を色付きで表示する
   echo "${branch_status}[$branch_name]"
 }
- 
+
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt prompt_subst
- 
+
 # プロンプトの右側にメソッドの結果を表示させる
 RPROMPT='`rprompt-git-current-branch`'
 #alias hub-pr="hub pull-request | open"
@@ -75,3 +72,23 @@ alias gp="git push"
 alias gd="git diff"
 alias gl="git log --pretty='format:%Cblue[%ad] %Cgreen%an %Creset%s' --date=short"
 alias gr="git remote -v"
+alias gus="git update-index --skip-worktree"
+alias guns="git update-index --no-skip-worktree"
+
+typeset -U path PATH
+
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+eval "$(mise activate zsh)"
+
+export LANG=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
+export LC_CTYPE=ja_JP.UTF-8
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
+
+
+# Chrome DevTools MCP alias
+alias chrome-debug='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug-profile'
+
